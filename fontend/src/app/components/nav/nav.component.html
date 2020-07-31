@@ -10,7 +10,7 @@
         </li>
         <li *ngIf="loggenIn()" class="nav-item">
             <a class="nav-link" (click)="logout()" style="cursor: pointer;">
-                <i class="fa fa-sign-out">Logout</i> 
+                <i class="fa fa-sign-out">Logout</i>
             </a>
         </li>
 
@@ -25,7 +25,7 @@
     <ng-template #loggedInUser>
         <div class="dropdown">
             <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-                Welcome User
+                Welcome {{authService.currentUser?.username}}
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="#"><i class="fa fa-user"></i>Edit Profile</a>

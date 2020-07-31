@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { ValuesComponent } from './values/values.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { NavComponent } from './nav/nav.component';
@@ -13,7 +12,6 @@ import { ErrorInterceptorProvider } from '../interceptors/error.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
-    ValuesComponent,
     NavComponent
   ],
   imports: [

@@ -1,6 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { AlertifyService } from '../../services/alertify.service';
+import { User } from 'src/app/models/user.model';
+
 
 @Component({
   selector: 'app-nav',
@@ -9,7 +12,9 @@ import { AuthService } from '../../services/auth.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(public authService: AuthService, private alertify: AlertifyService) { }
+
+  currentUser: User;
 
   @ViewChild('loginForm', { static: false }) loginForm: NgForm;
 
@@ -18,8 +23,11 @@ export class NavComponent implements OnInit {
 
   onSubmit() {
     this.authService.login(this.loginForm.value).subscribe(
-      next => console.log('user siggned in'),
-      error => console.log(error)
+      next => {
+        console.log('user siggned in');
+        this.alertify.success('User loggedIn Successfully');
+      },
+      error => this.alertify.error(error)
     )
   }
 
