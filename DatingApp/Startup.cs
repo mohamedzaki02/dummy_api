@@ -9,6 +9,10 @@ using Microsoft.Extensions.Logging;
 using DatingApp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Net;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Diagnostics;
+using DatingApp.Helpers;
 
 namespace DatingApp
 {
@@ -46,6 +50,7 @@ namespace DatingApp
                         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value))
                     });
 
+
             services.AddControllers(options => options.ReturnHttpNotAcceptable = true)
                     .AddXmlDataContractSerializerFormatters();
         }
@@ -56,6 +61,20 @@ namespace DatingApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler(builder => builder.Run(async ctx =>
+                {
+                    ctx.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    var errorObj = ctx.Features.Get<IExceptionHandlerFeature>();
+                    if (errorObj != null)
+                    {
+                        // ctx.Response.Headers.Add("xxx-hasd",new[]{"test value"});
+                        ctx.Response.AddApplicationError(errorObj.Error.Message);
+                        await ctx.Response.WriteAsync(errorObj.Error.Message);
+                    }
+                }));
             }
 
             // app.UseHttpsRedirection();
