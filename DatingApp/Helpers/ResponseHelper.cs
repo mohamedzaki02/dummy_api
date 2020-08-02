@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace DatingApp.Helpers
 {
-    public static class ResponseHelpers
+    public static class ResponseHelper
     {
         public static void AddApplicationError(this HttpResponse response, string message)
         {

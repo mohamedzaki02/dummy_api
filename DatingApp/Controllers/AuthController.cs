@@ -16,20 +16,20 @@ namespace DatingApp.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IAuthRepository _authRepository;
         private readonly IConfiguration _config;
-        public AuthController(IUserRepository userRepository, IConfiguration config)
+        public AuthController(IAuthRepository userRepository, IConfiguration config)
         {
             _config = config;
-            _userRepository = userRepository;
+            _authRepository = userRepository;
 
         }
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserForRegisterDto user)
         {
             // if(!ModelState.IsValid) return BadRequest(ModelState); // NOT NEEDED 'Cause ApiController
-            if (await _userRepository.UserExists(user.UserName)) return BadRequest("user already esists");
-            await _userRepository.Register(new User
+            if (await _authRepository.UserExists(user.UserName)) return BadRequest("user already esists");
+            await _authRepository.Register(new User
             {
                 Username = user.UserName
             }, user.Password);
@@ -39,7 +39,7 @@ namespace DatingApp.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserForLoginDto user)
         {
-            var user_to_login = await _userRepository.Login(user.Username, user.Password);
+            var user_to_login = await _authRepository.Login(user.Username, user.Password);
             if (user_to_login == null) return Unauthorized();
 
             var claims = new[]{

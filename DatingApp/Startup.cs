@@ -6,13 +6,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using DatingApp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Diagnostics;
 using DatingApp.Helpers;
+using DatingApp.Services;
+using DatingApp.Models;
+using AutoMapper;
+using System;
 
 namespace DatingApp
 {
@@ -33,13 +36,17 @@ namespace DatingApp
                 optionsbuilder.UseSqlServer(Configuration.GetConnectionString("DataContextDb"));
                 optionsbuilder.UseLoggerFactory(LoggerFactory.Create(builder =>
                 {
-                    builder.AddFilter((category, level) => category == DbLoggerCategory.Database.Command.Name && level == LogLevel.Information)
+                    builder.AddFilter((category, level) => category == DbLoggerCategory.Database.Command.Name &&
+                     level == LogLevel.Information)
                     .AddConsole();
                 }));
             });
 
 
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped(typeof(IDatingRepository<>), typeof(DatingRepository<>));
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
@@ -52,7 +59,9 @@ namespace DatingApp
 
 
             services.AddControllers(options => options.ReturnHttpNotAcceptable = true)
-                    .AddXmlDataContractSerializerFormatters();
+                    .AddXmlDataContractSerializerFormatters()
+                    .AddNewtonsoftJson(opts => opts.SerializerSettings.ReferenceLoopHandling =
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

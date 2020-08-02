@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { AlertifyService } from '../../services/alertify.service';
 import { User } from 'src/app/models/user.model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { User } from 'src/app/models/user.model';
 })
 export class NavComponent implements OnInit {
 
-  constructor(public authService: AuthService, private alertify: AlertifyService) { }
+  constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) { }
 
   currentUser: User;
 
@@ -24,10 +25,11 @@ export class NavComponent implements OnInit {
   onSubmit() {
     this.authService.login(this.loginForm.value).subscribe(
       next => {
-        console.log('user siggned in');
+        this.authService.deCodeToken();
         this.alertify.success('User loggedIn Successfully');
       },
-      error => this.alertify.error(error)
+      error => this.alertify.error(error),
+      () => this.router.navigate(['/members'])
     )
   }
 
@@ -37,7 +39,7 @@ export class NavComponent implements OnInit {
 
   logout() {
     this.authService.logOut();
-    console.log('user logged out');
+    this.router.navigate(['/']);
   }
 
 

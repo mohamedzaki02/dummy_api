@@ -1,18 +1,17 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Dating App</a>
+    <a class="navbar-brand" routerLink="/">Dating App</a>
 
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-            <a class="nav-link" href="#">Home</a>
+    <ul *ngIf="loggenIn()" class="navbar-nav mr-auto">
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['/members']">Matches</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['/lists']">Lists</a>
         </li>
-        <li *ngIf="loggenIn()" class="nav-item">
-            <a class="nav-link" (click)="logout()" style="cursor: pointer;">
-                <i class="fa fa-sign-out">Logout</i>
-            </a>
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/messages">Messages</a>
         </li>
+
 
     </ul>
     <form *ngIf="!loggenIn(); else loggedInUser;" #loginForm="ngForm" (ngSubmit)="onSubmit()"
@@ -23,15 +22,17 @@
     </form>
 
     <ng-template #loggedInUser>
-        <div class="dropdown">
-            <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-                Welcome {{authService.currentUser?.username}}
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#"><i class="fa fa-user"></i>Edit Profile</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#"><i class="fa fa-sign-out">Logout</i> </a>
-            </div>
+        <div class="mr-3">
+            <span dropdown>
+                <a href id="basic-link" dropdownToggle (click)="false" aria-controls="basic-link-dropdown">Welcome
+                    {{authService.currentUser?.username}}</a>
+                <ul id="basic-link-dropdown" *dropdownMenu class="dropdown-menu" role="menu"
+                    aria-labelledby="basic-link">
+                    <li><a class="dropdown-item"><i class="fa fa-user"></i>Edit Profile</a></li>
+                    <li><a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i>Log
+                            out</a></li>
+                </ul>
+            </span>
         </div>
     </ng-template>
 

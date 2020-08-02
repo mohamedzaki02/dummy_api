@@ -8,16 +8,33 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavComponent } from './nav/nav.component';
 
 import { ErrorInterceptorProvider } from '../interceptors/error.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { HomeComponent } from './home/home.component';
+import { MembersComponent } from './members/members.component';
+import { ListsComponent } from './lists/lists.component';
+import { MessagesComponent } from './messages/messages.component';
+
+import { routes } from './routes';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent
+    NavComponent,
+    HomeComponent,
+    MembersComponent,
+    ListsComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    BsDropdownModule.forRoot(),
+    RouterModule.forRoot(routes)
   ],
   providers: [
     ErrorInterceptorProvider
