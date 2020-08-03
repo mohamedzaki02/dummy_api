@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user.model';
+import { User } from '../models/user';
 import { map } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -14,7 +14,7 @@ export class AuthService {
 
   baseUrl = 'http://localhost:5000/api/auth/';
   jwtHelper = new JwtHelperService();
-  currentUser: User;
+  currentUser: any;
 
   login(user: User): Observable<any> {
     return this.http.post(this.baseUrl + 'login', user).pipe(map((response: any) => {
@@ -33,9 +33,9 @@ export class AuthService {
 
   deCodeToken(): void {
     let token = localStorage.getItem('token');
-    if (token){
+    if (token) {
       let token_val = this.jwtHelper.decodeToken(token);
-      this.currentUser =  new User(token_val.unique_name);
+      this.currentUser = { username: token_val.unique_name };
     }
   }
 }

@@ -30,7 +30,7 @@ namespace DatingApp
                 catch (System.Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An Error Occured During Migration");   
+                    logger.LogError(ex, "An Error Occured During Migration");
                 }
 
             }

@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+                <img class="card-img-top img-thumbnail" src="{{user?.photoUrl}}" alt="{{user.knownAs}}" />
+                <div class="card-body">
+                    <div>
+                        <strong> Locations : </strong>
+                        <p> {{user.city}} , {{user.country}} </p>
+                    </div>
+                    <div>
+                        <strong> Age : </strong>
+                        <p> {{user.age}} </p>
+                    </div>
+                    <div>
+                        <strong> Last Active : </strong>
+                        <p> {{user.lastActive}} </p>
+                    </div>
+                    <div>
+                        <strong> Member Since : </strong>
+                        <p> {{user.createdAt}} </p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group d-flex">
+                        <button class="btn btn-primary w-100">Like</button>
+                        <button class="btn btn-success w-100">Message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <tabset>
+                <tab heading="About {{user.knownAs}}">
+                    <div class="container">
+                        <h4>Description</h4>
+                        <span>{{user.introduction}}</span>
+                        <h4>Looging For</h4>
+                        <span>{{user.lookingFor}}</span>
+                    </div>
+                </tab>
+                <tab heading="Interests">
+                    <h4>Interests</h4>
+                    <span>{{user.interests}}</span>
+                </tab>
+                <tab heading="Photos">
+                    <ngx-gallery style="display: inline-block;margin-bottom: 20px;" [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+                </tab>
+                <tab heading="Messages">
+                    <h4>Messages go here ...</h4>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+</div>

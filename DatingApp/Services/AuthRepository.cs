@@ -17,6 +17,7 @@ namespace DatingApp.Services
 
         public async Task<User> Login(string username, string password)
         {
+            //_context.Database.Migrate();
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
             if (user == null) return null;
             return PasswordHelper.Verify(password, user.PasswordHash , user.PasswordSalt)? user : null;

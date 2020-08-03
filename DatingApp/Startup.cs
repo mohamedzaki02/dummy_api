@@ -16,6 +16,7 @@ using DatingApp.Services;
 using DatingApp.Models;
 using AutoMapper;
 using System;
+using Microsoft.OpenApi.Models;
 
 namespace DatingApp
 {
@@ -62,6 +63,13 @@ namespace DatingApp
                     .AddXmlDataContractSerializerFormatters()
                     .AddNewtonsoftJson(opts => opts.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddSwaggerGen(opts => opts.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "Dating Api",
+                Description = "A Lightweight Dummy Api for Dating",
+                Version = "v1"
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -100,6 +108,9 @@ namespace DatingApp
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(opts => opts.SwaggerEndpoint("/swagger/v1/swagger.json", "Dating Api"));
         }
     }
 }

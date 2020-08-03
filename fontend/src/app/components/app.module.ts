@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppComponent } from './app.component';
 
@@ -18,6 +19,20 @@ import { MessagesComponent } from './messages/messages.component';
 
 import { routes } from './routes';
 import { RouterModule } from '@angular/router';
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { MemberDetailsComponent } from './members/member-details/member-details.component';
+
+import { TabsModule } from 'ngx-bootstrap/tabs';
+
+import { MemberDetailsResolver } from '../guards/members/member-details.resolver';
+import { MembersListResolver } from '../guards/members/members-list.resolver';
+
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -26,7 +41,9 @@ import { RouterModule } from '@angular/router';
     HomeComponent,
     MembersComponent,
     ListsComponent,
-    MessagesComponent
+    MessagesComponent,
+    MemberCardComponent,
+    MemberDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -34,10 +51,21 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
-    RouterModule.forRoot(routes)
+    TabsModule.forRoot(),
+    RouterModule.forRoot(routes),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:5000'],
+        disallowedRoutes: ['localhost:5000/api/auth']
+      }
+    }),
+    NgxGalleryModule
   ],
   providers: [
-    ErrorInterceptorProvider
+    ErrorInterceptorProvider,
+    MemberDetailsResolver,
+    MembersListResolver
   ],
   bootstrap: [AppComponent]
 })

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { AlertifyService } from '../../services/alertify.service';
-import { User } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
 
 
@@ -15,7 +14,6 @@ export class NavComponent implements OnInit {
 
   constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) { }
 
-  currentUser: User;
 
   @ViewChild('loginForm', { static: false }) loginForm: NgForm;
 
