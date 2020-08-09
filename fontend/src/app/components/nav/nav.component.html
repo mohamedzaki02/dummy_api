@@ -28,7 +28,7 @@
                     {{authService.currentUser?.username}}</a>
                 <ul id="basic-link-dropdown" *dropdownMenu class="dropdown-menu" role="menu"
                     aria-labelledby="basic-link">
-                    <li><a class="dropdown-item"><i class="fa fa-user"></i>Edit Profile</a></li>
+                    <li><a class="dropdown-item" [routerLink]="['/members/edit']"><i class="fa fa-user"></i>Edit Profile</a></li>
                     <li><a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i>Log
                             out</a></li>
                 </ul>

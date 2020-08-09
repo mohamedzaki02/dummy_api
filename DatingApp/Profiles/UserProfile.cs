@@ -29,6 +29,9 @@ namespace DatingApp.Profiles
                 dest => dest.Age,
                 opts => opts.MapFrom(src => src.DateOfBirth.TillNow())
             );
+
+
+            CreateMap<UserForEdit, User>();
         }
     }
 }

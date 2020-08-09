@@ -26,8 +26,10 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { MemberDetailsResolver } from '../guards/members/member-details.resolver';
 import { MembersListResolver } from '../guards/members/members-list.resolver';
+import { MemberEditResolver } from '../guards/members/member-edit.resolver';
 
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
 
 
 export function tokenGetter() {
@@ -43,7 +45,8 @@ export function tokenGetter() {
     ListsComponent,
     MessagesComponent,
     MemberCardComponent,
-    MemberDetailsComponent
+    MemberDetailsComponent,
+    MemberEditComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +68,8 @@ export function tokenGetter() {
   providers: [
     ErrorInterceptorProvider,
     MemberDetailsResolver,
-    MembersListResolver
+    MembersListResolver,
+    MemberEditResolver
   ],
   bootstrap: [AppComponent]
 })
