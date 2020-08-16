@@ -46,6 +46,7 @@ namespace DatingApp
 
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped(typeof(IDatingRepository<>), typeof(DatingRepository<>));
+            services.AddScoped<DataContext>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -84,17 +85,18 @@ namespace DatingApp
             }
             else
             {
-                app.UseExceptionHandler(builder => builder.Run(async ctx =>
-                {
-                    ctx.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    var errorObj = ctx.Features.Get<IExceptionHandlerFeature>();
-                    if (errorObj != null)
+                app.UseExceptionHandler(builder =>
+                    builder.Run(async ctx =>
                     {
-                        // ctx.Response.Headers.Add("xxx-hasd",new[]{"test value"});
-                        ctx.Response.AddApplicationError(errorObj.Error.Message);
-                        await ctx.Response.WriteAsync(errorObj.Error.Message);
-                    }
-                }));
+                        ctx.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        var errorObj = ctx.Features.Get<IExceptionHandlerFeature>();
+                        if (errorObj != null)
+                        {
+                            // ctx.Response.Headers.Add("xxx-hasd",new[]{"test value"});
+                            ctx.Response.AddApplicationError(errorObj.Error.Message);
+                            await ctx.Response.WriteAsync(errorObj.Error.Message);
+                        }
+                    }));
             }
 
             // app.UseHttpsRedirection();

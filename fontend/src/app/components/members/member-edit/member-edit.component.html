@@ -33,7 +33,8 @@
                 </div>
                 <div class="card-footer">
                     <div class="btn-group d-flex">
-                        <button type="submit" form="editForm" [disabled]="!editForm.dirty" class="btn btn-success btn-block">Save</button>
+                        <button type="submit" form="editForm" [disabled]="!editForm.dirty"
+                            class="btn btn-success btn-block">Save</button>
                     </div>
                 </div>
             </div>
@@ -66,7 +67,7 @@
                 </tab>
 
                 <tab heading="Photos">
-                    photos control goes here ...
+                    <app-photo-editor [photos]="user.photos"></app-photo-editor>
                 </tab>
 
             </tabset>

@@ -9,6 +9,7 @@ namespace DatingApp.Services
         void Create(T entity);
         void Delete(T entity);
         Task<T> GetById(int id);
+        Task<Photo> GetUserPhoto(int photoId);
         Task<ICollection<T>> GetAll();
         Task<bool> SaveAll();
     }

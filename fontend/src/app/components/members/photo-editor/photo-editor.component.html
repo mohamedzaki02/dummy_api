@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-2 text-center" *ngFor="let photo of photos" style="margin: 15px 25px !important;">
+        <img src="{{photo.url}}" alt="" class="img-thumbnail p-1">
+        <div class="btn-group">
+            <button class="btn btn-success">Main</button>
+            <button class="btn btn-danger">
+                <i class="fa fa-trash"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <button class="btn btn-info" style="margin-right:15px;" (click)="toggleStatus()">
+            <span *ngIf="fileUploadControl.disabled">Enable</span>
+            <span *ngIf="!fileUploadControl.disabled">Disable</span>
+            Upload
+        </button>
+        <button class="btn btn-info" (click)="toggleMultiple()">
+            <span *ngIf="!fileUploadControl.isMultiple">Enable</span>
+            <span *ngIf="fileUploadControl.isMultiple">Disable</span>
+            Multiple
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <file-upload [ngModel]="uploadedFiles" [control]="fileUploadControl"></file-upload>
+        <button class="btn btn-info">Upload Files</button>
+
+        <div class="alert alert-success" *ngIf="fileUploadControl.value.length > 0">
+            <div class="file-list">
+                <div class="file-item" *ngFor="let file of fileUploadControl.value"
+                    (click)="fileUploadControl.removeFile(file)">
+                    {{ file.name }}
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

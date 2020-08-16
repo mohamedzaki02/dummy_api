@@ -37,6 +37,11 @@ namespace DatingApp.Services
             return await _context.Set<T>().Include("Photos").FirstOrDefaultAsync(a => a.Id == id);
         }
 
+        public async Task<Photo> GetUserPhoto(int photoId)
+        {
+            return await _context.Photos.FirstOrDefaultAsync(p => p.Id == photoId);
+        }
+
         public async Task<bool> SaveAll()
         {
             return await _context.SaveChangesAsync() > 0;

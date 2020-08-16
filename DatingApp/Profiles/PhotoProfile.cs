@@ -9,6 +9,7 @@ namespace DatingApp.Profiles
         public PhotoProfile()
         {
             CreateMap<Photo, PhotoForDetailsDto>();
+            CreateMap<PhotoForCreationDto, Photo>();
         }
     }
 }
