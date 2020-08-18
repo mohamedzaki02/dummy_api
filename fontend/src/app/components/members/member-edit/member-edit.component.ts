@@ -36,12 +36,18 @@ export class MemberEditComponent implements OnInit, CanDeactivateComponent {
     this.route.data.subscribe((resolveData: Data) => this.user = resolveData['user']);
   }
 
+  photoUploaded(photo) {
+    this.user.photos.push(photo);
+    this.alertify.success('photo uploaded successfully!');
+  }
+
   saveUser() {
     this.userService.updateUser(+this.authService.currentUser.userId, this.editForm.value).subscribe(next => {
       this.alertify.success('profile data saved');
       this.editForm.reset(this.editForm.value);
     }, error => this.alertify.error(error));
-
   }
+
+  
 
 }

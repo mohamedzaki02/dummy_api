@@ -88,5 +88,23 @@ namespace DatingApp.Controllers
 
 
 
+        [HttpPost("{id}/main")]
+        public async Task<IActionResult> UpdateMainPhoto(int userId, int id)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)) return Unauthorized();
+            var user = await _repo.GetById(userId);
+            if (user == null) return NotFound();
+            var usrPhotos = user.Photos;
+            var oldMainPhoto = usrPhotos.SingleOrDefault(p => p.IsMain);
+            if (oldMainPhoto != null) oldMainPhoto.IsMain = false;
+            var photoToUpdate = usrPhotos.SingleOrDefault(p => p.Id == id);
+            if (photoToUpdate == null) return BadRequest("could not update user photo");
+            photoToUpdate.IsMain = true;
+            if (await _repo.SaveAll()) return NoContent();
+            return BadRequest("update failure");
+        }
+
+
+
     }
 }

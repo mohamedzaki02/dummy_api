@@ -13,7 +13,7 @@ export class UsersService {
   baseUrl = environment.baseUrl + 'users/';
   httpOptions = {
     headers: new HttpHeaders({
-      'Accept' : 'application/json'
+      'Accept': 'application/json'
     })
   };
 
@@ -25,8 +25,12 @@ export class UsersService {
     return this.http.get<User>(this.baseUrl + id, this.httpOptions);
   }
 
-  updateUser(id: number , user: User){
-    return this.http.put(this.baseUrl + id , user);
+  updateUser(id: number, user: User) {
+    return this.http.put(this.baseUrl + id, user);
+  }
+
+  setUserMainPhoto(userId, photoId: number) {
+    return this.http.post(this.baseUrl + userId + '/photos/' + photoId + '/main', {});
   }
 
 }
